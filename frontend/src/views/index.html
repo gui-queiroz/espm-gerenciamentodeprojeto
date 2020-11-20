@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>My First HTML</title>
+        <title>Kosima</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../public/stylesheets/index.css">
@@ -46,7 +46,51 @@
                 </div>
             </div>
             <div class="Content">
-                
+                <!---------------------------->
+                <div class="Tables-Wrapper">
+
+                    <div class="Table-Container">
+                        <div class="Table-Header">
+                            <img src="https://media-cdn.tripadvisor.com/media/photo-s/06/ce/1e/63/daruma-restaurante-japones.jpg" alt="">
+                        </div>
+                        <div class="Table-Body">
+                            <div class="Table-Text">
+                                <div class="Table-Number">21</div>
+                                <div class="Table-Parcial">
+                                    <h2>Valor Atual</h2>
+                                    <span>R$512,79</span>
+                                </div>
+                            </div>
+                            <div class="Table-Buttons">
+                                <button class="Table-Open" onclick="AbrirMesa(id)">Abrir Mesa</button>
+                                <button class="Table-Details" onclick="DetalheMesa(id)">Detalhes</button>
+                                <button class="Table-Close" onclick="FecharMesa(id)">Fechar Mesa</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Table-Container Inactive">
+                        <div class="Table-Header">
+                            <img src="https://media-cdn.tripadvisor.com/media/photo-s/06/ce/1e/63/daruma-restaurante-japones.jpg" alt="">
+                        </div>
+                        <div class="Table-Body">
+                            <div class="Table-Text">
+                                <div class="Table-Number">22</div>
+                                <div class="Table-Parcial">
+                                    <h2>Valor Atual</h2>
+                                    <span>-</span>
+                                </div>
+                            </div>
+                            <div class="Table-Buttons">
+                                <button class="Table-Open" onclick="AbrirMesa(id)">Abrir Mesa</button>
+                                <button class="Table-Details" onclick="DetalheMesa(id)">Detalhes</button>
+                                <button class="Table-Close" onclick="FecharMesa(id)">Fechar Mesa</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!---------------------------->
             </div>
         </div>
     </body>
