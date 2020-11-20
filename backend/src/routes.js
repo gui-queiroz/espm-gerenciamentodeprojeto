@@ -1,11 +1,31 @@
 const express = require('express');
-const SensorController = require('./controllers/SensorController');
+const Estoque = require('./controllers/EstoqueController');
+const Item = require('./controllers/ItemController');
+const Mesa = require('./controllers/MesaController');
+const Pedido = require('./controllers/PedidoController');
+const Produto = require('./controllers/ProdutoController');
 
 const routes = express.Router();
 
-//methods
-//sensor
-routes.post('/sensor', SensorController.criar);
-routes.get('/sensor', SensorController.listar);
+routes.post('/estoque', Estoque.create);
+routes.get('/estoque', Estoque.getAll);
+routes.put('/estoque', Estoque.update);
+
+routes.post('/item', Item.create);
+routes.get('/item', Item.getAll);
+routes.put('/item', Item.update);
+
+routes.post('/mesa', Mesa.create);
+routes.get('/mesa', Mesa.getAll);
+routes.get('/mesa/number', Mesa.getByNumber);
+routes.put('/mesa', Mesa.update);
+
+routes.post('/pedido', Pedido.create);
+routes.get('/pedido', Pedido.getAll);
+routes.put('/pedido', Pedido.update);
+
+routes.post('/produto', Produto.create);
+routes.get('/produto', Produto.getAll);
+routes.put('/produto', Produto.update);
 
 module.exports = routes;
