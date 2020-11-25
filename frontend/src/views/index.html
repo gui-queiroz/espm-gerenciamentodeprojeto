@@ -5,6 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../public/stylesheets/index.css">
+        <link rel="stylesheet" href="../public/stylesheets/modal.css">
+        <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
     </head>
     <body>
         <div class="Kosima">
@@ -63,8 +65,7 @@
                             </div>
                             <div class="Table-Buttons">
                                 <button class="Table-Open" onclick="AbrirMesa(id)">Abrir Mesa</button>
-                                <button class="Table-Details" onclick="DetalheMesa(id)">Detalhes</button>
-                                <button class="Table-Close" onclick="FecharMesa(id)">Fechar Mesa</button>
+                                <button class="Table-Details" data-micromodal-trigger="modal-1">Detalhes</button>
                             </div>
                         </div>
                     </div>
@@ -83,8 +84,7 @@
                             </div>
                             <div class="Table-Buttons">
                                 <button class="Table-Open" onclick="AbrirMesa(id)">Abrir Mesa</button>
-                                <button class="Table-Details" onclick="DetalheMesa(id)">Detalhes</button>
-                                <button class="Table-Close" onclick="FecharMesa(id)">Fechar Mesa</button>
+                                <button class="Table-Details" data-micromodal-trigger="modal-1">Detalhes</button>
                             </div>
                         </div>
                     </div>
@@ -93,9 +93,67 @@
                 <!---------------------------->
             </div>
         </div>
+        <div class="Modal-Wrapper">
+            <!-- Renderizar um modal para cada mesa aberta -->
+            
+            <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+                <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                  <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                      <h2 class="modal__title" id="modal-1-title">Mesa X</h2>
+                      <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <main class="modal__content" id="modal-1-content">
+                        <table class="order-wrapper">
+                            <tr class="order-item" id="legenda">
+                                    <th class="order-name">Nome do Item</th>
+                                    <th class="order-qt">Qtd</th>
+                                    <th class="order-price">Valor Un.</th>
+                            </tr>
+                            <!-----------Renderizar para cada item-------------->
+                            <tr class="order-item">
+                                  <td class="order-name">Prato X</td>
+                                  <td class="order-qt">x</td>
+                                  <td class="order-price">R$XX,XX</td>
+                            </tr>
+                            <tr class="order-item">
+                                  <td class="order-name">Prato X</td>
+                                  <td class="order-qt">x</td>
+                                  <td class="order-price">R$XX,XX</td>
+                            </tr>
+                            <tr class="order-item">
+                                  <td class="order-name">Prato X</td>
+                                  <td class="order-qt">x</td>
+                                  <td class="order-price">R$XX,XX</td>
+                            </tr>
+                            <tr class="order-item">
+                                  <td class="order-name">Prato X</td>
+                                  <td class="order-qt">x</td>
+                                  <td class="order-price">R$XX,XX</td>
+                            </tr>
+                            <!------------------------->
+                            <tr class="order-item" id="sumario">
+                                <th class="order-name">Total</th>
+                                <th class="order-price">R$XX,XX</th>
+                            </tr>
+                        </table>
+                    </main>
+                    <footer class="modal__footer">
+                      <button class="modal__btn modal__btn-primary">Fechar Conta</button>
+                      <button class="modal__btn" data-micromodal-close>Voltar</button>
+                    </footer>
+                  </div>
+                </div>
+            </div>    
+
+            <!-- Renderizar um modal para cada mesa aberta -->
+        </div>
     </body>
     <script>
         window.BarOpen = false;
+        MicroModal.init({
+            disableFocus: true
+        });
         function ToggleBar(){
             if(window.BarOpen == true){
                 document.querySelector('.Bar').classList.add('Closed');
@@ -105,6 +163,13 @@
                 document.querySelector('.Bar').classList.remove('Closed');
                 window.BarOpen = true;
             }
+        }
+
+        function AbrirMesa(id){
+            //muda o valor da flag "aberta" e recarrega a pagina
+        }
+        function FecharMesa(id){
+            //muda o valor da flag "aberta", lança o lucro no financeiro e recarrega a pagina
         }
     </script>
 </html>
