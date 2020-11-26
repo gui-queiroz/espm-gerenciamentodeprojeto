@@ -19,10 +19,26 @@ module.exports = {
     },
 
     async update(req, res){
-        const {descricao, quantidade, idEstoque} = req.body;
+        const {descricao, quantidade} = req.body;
 
-        const estoque = await Estoque.update({descricao, quantidade}, {returning: true, where: {id: idEstoque}});
+        let idEstoque = req.params.id;
 
+        let atualizado = Date.now();
+
+        const estoqueAtualizar = await Estoque.update({descricao, quantidade, atualizado: atualizado}, {returning: true, where: {id: idEstoque}});
+        
+        const estoque = await Estoque.findByPk(idEstoque);
         return res.json(estoque);
+    },
+
+    async deletar(req, res){
+
+        let idEstoque = req.params.id
+
+        const estoque = Estoque.destroy({where: {id: idEstoque}})
+
+        const itensEstoque = await Estoque.findAll()
+
+        return res.json(itensEstoque);
     }
 };

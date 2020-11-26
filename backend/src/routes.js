@@ -10,7 +10,8 @@ const routes = express.Router();
 
 routes.post('/estoque', Estoque.create);
 routes.get('/estoque', Estoque.getAll);
-routes.put('/estoque', Estoque.update);
+routes.put('/estoque/:id', Estoque.update);
+routes.delete('/estoque/:id', Estoque.deletar);
 
 routes.post('/item', Item.create);
 routes.get('/item', Item.getAll);
