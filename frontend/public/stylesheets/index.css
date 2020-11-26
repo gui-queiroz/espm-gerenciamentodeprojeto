@@ -504,4 +504,120 @@ body .Kosima .Content .Order-Wrapper .Order-Modal .Order-Button {
 body .Kosima .Content .Order-Wrapper .Order-Modal .Order-Button:hover {
   background: #c61354;
 }
+
+body .Kosima .Content .Datatable-Wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+body .Kosima .Content .Datatable-Wrapper button {
+  cursor: pointer;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Header {
+  width: 100%;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Datatable-Area {
+  width: 70%;
+  padding: 0px 25px;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Datatable-Area table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Datatable-Area table thead {
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 18px;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Datatable-Area table tbody tr {
+  padding-top: 15px;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Datatable-Area table tbody tr td {
+  font-size: 15px;
+  text-align: left;
+  border-bottom: 2px solid #8d8d8d;
+  padding: 10px 5px;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Datatable-Area table tbody tr td .Delete-Item-Button {
+  background-color: #c61354;
+  border-radius: 5px;
+  border: 0;
+  color: #fff;
+  padding: 5px 10px;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Datatable-Area table tbody tr td .Delete-Item-Button:hover {
+  background-color: #de306f;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Form-Area {
+  width: 30%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  padding: 15px;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Form-Area form {
+  background-color: #de306f;
+  border-radius: 10px;
+  padding: 10px 15px;
+  color: #fff;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Form-Area form button,
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Form-Area form input,
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Form-Area form select {
+  width: 100%;
+  margin: 15px 0px;
+  border-radius: 10px;
+  padding: 10px 0px;
+  border: 0;
+  background-color: #fff;
+}
+
+body .Kosima .Content .Datatable-Wrapper .Datatable-Content .Form-Area form button:hoverhover {
+  background-color: #bebebe;
+}
 /*# sourceMappingURL=index.css.map */
