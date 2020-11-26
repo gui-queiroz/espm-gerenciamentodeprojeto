@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/modal.css" />
     <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
   </head>
-  <body onload="loadTables()">
+  <body>
     <div class="Kosima">
       <div class="Bar Closed">
         <div class="Bar-Header">
@@ -49,105 +49,12 @@
       </div>
       <div class="Content">
         <!---------------------------->
-        <div class="Tables-Wrapper">
-          <div class="Table-Container">
-            <div class="Table-Header">
-              <img
-                src="https://media-cdn.tripadvisor.com/media/photo-s/06/ce/1e/63/daruma-restaurante-japones.jpg"
-                alt=""
-              />
-            </div>
-            <div class="Table-Body">
-              <div class="Table-Text">
-                <div class="Table-Number">21</div>
-                <div class="Table-Parcial">
-                  <h2>Valor Atual</h2>
-                  <span>R$512,79</span>
-                </div>
-              </div>
-              <div class="Table-Buttons">
-                <button class="Table-Open" onclick="AbrirMesa(id)">
-                  Abrir Mesa
-                </button>
-                <button class="Table-Details" data-micromodal-trigger="modal-1">
-                  Detalhes
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="Table-Container Inactive">
-            <div class="Table-Header">
-              <img
-                src="https://media-cdn.tripadvisor.com/media/photo-s/06/ce/1e/63/daruma-restaurante-japones.jpg"
-                alt=""
-              />
-            </div>
-            <div class="Table-Body">
-              <div class="Table-Text">
-                <div class="Table-Number">22</div>
-                <div class="Table-Parcial">
-                  <h2>Valor Atual</h2>
-                  <span>-</span>
-                </div>
-              </div>
-              <div class="Table-Buttons">
-                <button class="Table-Open" onclick="AbrirMesa(id)">
-                  Abrir Mesa
-                </button>
-                <button class="Table-Details" data-micromodal-trigger="modal-1">
-                  Detalhes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="Tables-Wrapper"></div>
         <!---------------------------->
       </div>
     </div>
     <div class="Modal-Wrapper">
       <!-- Renderizar um modal para cada mesa aberta -->
-
-      <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-          <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-            <header class="modal__header">
-              <h2 class="modal__title" id="modal-1-title">Mesa X</h2>
-              <button
-                class="modal__close"
-                aria-label="Close modal"
-                data-micromodal-close
-              ></button>
-            </header>
-            <main class="modal__content" id="modal-1-content">
-              <table class="order-wrapper">
-                <tr class="order-item" id="legenda">
-                  <th class="order-name">Nome do Item</th>
-                  <th class="order-qt">Qtd</th>
-                  <th class="order-price">Valor Un.</th>
-                </tr>
-                <!-----------Renderizar para cada item-------------->
-                <tr class="order-item">
-                  <td class="order-name">Prato X</td>
-                  <td class="order-qt">x</td>
-                  <td class="order-price">R$XX,XX</td>
-                </tr>
-                <!------------------------->
-                <tr class="order-item" id="sumario">
-                  <th class="order-name">Total</th>
-                  <th class="order-price">R$XX,XX</th>
-                </tr>
-              </table>
-            </main>
-            <footer class="modal__footer">
-              <button class="modal__btn modal__btn-primary">
-                Fechar Conta
-              </button>
-              <button class="modal__btn" data-micromodal-close>Voltar</button>
-            </footer>
-          </div>
-        </div>
-      </div>
 
       <!-- Renderizar um modal para cada mesa aberta -->
     </div>
@@ -157,125 +64,150 @@
     MicroModal.init({
       disableFocus: true,
     });
-    window.mesas = [];
 
-    function loadTables(){
-      fetch('http://localhost:5000/home').then(response => {
+    const tables_wrapper = document.querySelector('.Tables-Wrapper');
+    const modals_wrapper = document.querySelector('.Modal-Wrapper');
+
+    fetch('http://localhost:5000/home')
+      .then(response => {
         if (!response.ok) {
           throw response;
         }
-        return response;
+        return response.json();
       })
       .then(data => {
-        mesas = data;
+        data.forEach(function (table, index) {
+          const table_container = document.createElement('div');
+
+          table_container.innerHTML = `<div class="Table-Container ${
+            table.status == 1 ? '' : 'Inactive'
+          }">
+            <div class="Table-Header">
+              <img src="https://media-cdn.tripadvisor.com/media/photo-s/06/ce/1e/63/daruma-restaurante-japones.jpg"/>
+            </div>
+            <div class="Table-Body">
+              <div class="Table-Text">
+                <div class="Table-Number">${table.id}</div>
+                <div class="Table-Parcial">
+                  <h2>Valor Atual</h2>
+                  <span>${
+                    table.pedidos.valorFinal
+                      ? `R$${table.pedidos.valorFinal}`
+                      : '-'
+                  }</span>
+                </div>
+              </div>
+              <div class="Table-Buttons">
+                <button class="Table-Open" onclick="AbrirMesa(${table.id})">
+                  Abrir Mesa
+                </button>
+                <button class="Table-Details" onclick="showModal(${table.id})">
+                  Detalhes
+                </button>
+              </div>
+            </div>
+          </div>`;
+
+          tables_wrapper.append(table_container);
+
+          const tableOrders = table.pedidos.forEach(element => {
+            tableOrders +=
+              `<tr class="order-item">
+                <td class="order-name">` +
+              element.produto +
+              `</td>
+                <td class="order-qt">` +
+              element.quantidade +
+              `</td>
+                <td class="order-price">R$` +
+              element.valor / element.quantidade +
+              `</td>
+              </tr>`;
+          });
+          const modal = document.createElement('div');
+
+          modal.innerHTML = `
+            <div class="modal micromodal-slide" id="modal-${table.id}" aria-hidden="true">
+              <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-${table.id}-title">
+                  <header class="modal__header">
+                    <h2 class="modal__title" id="modal-${table.id}-title">Mesa ${table.id}</h2>
+                    <button
+                      class="modal__close"
+                      aria-label="Close modal"
+                      data-micromodal-close
+                    ></button>
+                  </header>
+                  <main class="modal__content" id="modal-${table.id}-content">
+                    <table class="order-wrapper">
+
+                    </table>
+                  </main>
+                  <footer class="modal__footer">
+                    <button onclick="FecharMesa(${table.id})" class="modal__btn modal__btn-primary">
+                      Fechar Conta
+                    </button>
+                    <button class="modal__btn" data-micromodal-close>Voltar</button>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          `;
+          if (table.status == 1) {
+            modals_wrapper.append(modal);
+
+            const modal_table = document.querySelector(
+              `#modal-${table.id} .order-wrapper`,
+            );
+
+            const modal_content_header = document.createElement('tr');
+            modal_content_header.innerHTML = `
+              <tr class="order-item" id="legenda">
+                <th class="order-name">Nome do Item</th>
+                <th class="order-qt">Qtd</th>
+                <th class="order-price">Valor Un.</th>
+              </tr>
+            `;
+
+            modal_content_header.classList.add('order-item');
+            modal_table.append(modal_content_header);
+
+            table.pedidos.forEach(element => {
+              console.log(element);
+              const modal_content_body = document.createElement('tr');
+
+              modal_content_body.innerHTML = `
+                <td class="order-name">${element.produto}</td>
+                <td class="order-qt">${element.quantidade}</td>
+                <td class="order-price">R$${
+                  element.valor / element.quantidade
+                }</td>
+              `;
+              modal_content_body.classList.add('order-item');
+
+              modal_table.append(modal_content_body);
+            });
+
+            const modal_content_footer = document.createElement('tr');
+            modal_content_footer.innerHTML = `
+              <th class="order-name">Total</th>
+              <th></th>
+              <th></th>
+              <th class="order-price">${
+                table.pedidos.valorFinal ? `R$${table.pedidos.valorFinal}` : '-'
+              }</th>
+            `;
+
+            modal_content_footer.classList.add('order-item');
+
+            modal_table.append(modal_content_footer);
+          }
+        });
       })
       .catch(error => {
         console.log(error);
         error.then(data => console.log(data));
       });
-
-      var tables = "";
-      var tableModals = "";
-      mesas.forEach(function(table, index){
-        if(table.status = 1){
-          tables += 
-          `<div class="Table-Container">
-            <div class="Table-Header">
-              <img src="https://media-cdn.tripadvisor.com/media/photo-s/06/ce/1e/63/daruma-restaurante-japones.jpg"/>
-            </div>
-            <div class="Table-Body">
-              <div class="Table-Text">
-                <div class="Table-Number">`+table.id+`</div>
-                <div class="Table-Parcial">
-                  <h2>Valor Atual</h2>
-                  <span>R$`+table.pedidos.valorFinal+`</span>
-                </div>
-              </div>
-              <div class="Table-Buttons">
-                <button class="Table-Open" onclick="AbrirMesa(`+table.id+`)">
-                  Abrir Mesa
-                </button>
-                <button class="Table-Details" data-micromodal-trigger="modal-`+table.id+`">
-                  Detalhes
-                </button>
-              </div>
-            </div>
-          </div>`;
-          var tableOrders = "";
-          table.pedidos.itens.forEach(element => {
-            tableOrders += 
-              `<tr class="order-item">
-                <td class="order-name">`+element.produto+`</td>
-                <td class="order-qt">`+element.quantidade+`</td>
-                <td class="order-price">R$`+element.valor/element.quantidade+`</td>
-              </tr>`
-          });
-          tableModals +=
-          `<div class="modal micromodal-slide" id="modal-`+table.id+`" aria-hidden="true">
-            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-              <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-`+table.id+`-title">
-                <header class="modal__header">
-                  <h2 class="modal__title" id="modal-`+table.id+`-title">Mesa `+table.id+`</h2>
-                  <button
-                    class="modal__close"
-                    aria-label="Close modal"
-                    data-micromodal-close
-                  ></button>
-                </header>
-                <main class="modal__content" id="modal-`+table.id+`-content">
-                  <table class="order-wrapper">
-                    <tr class="order-item" id="legenda">
-                      <th class="order-name">Nome do Item</th>
-                      <th class="order-qt">Qtd</th>
-                      <th class="order-price">Valor Un.</th>
-                    </tr>`
-                    +tableOrders+
-                    `
-                    <tr class="order-item" id="sumario">
-                      <th class="order-name">Total</th>
-                      <th class="order-price">R$`+table.pedidos.valorFinal+`</th>
-                    </tr>
-                  </table>
-                </main>
-                <footer class="modal__footer">
-                  <button onclick="FecharMesa(`+table.id+`)" class="modal__btn modal__btn-primary">
-                    Fechar Conta
-                  </button>
-                  <button class="modal__btn" data-micromodal-close>Voltar</button>
-                </footer>
-              </div>
-            </div>
-          </div>`;
-        }
-        else if(table.status != 1){
-          tables += 
-          `<div class="Table-Container">
-            <div class="Table-Header">
-              <img src="https://media-cdn.tripadvisor.com/media/photo-s/06/ce/1e/63/daruma-restaurante-japones.jpg"/>
-            </div>
-            <div class="Table-Body">
-              <div class="Table-Text">
-                <div class="Table-Number">`+table.id+`</div>
-                <div class="Table-Parcial">
-                  <h2>Valor Atual</h2>
-                  <span>R$`+table.pedidos.valorFinal+`</span>
-                </div>
-              </div>
-              <div class="Table-Buttons">
-                <button class="Table-Open" onclick="AbrirMesa(`+table.id+`)">
-                  Abrir Mesa
-                </button>
-                <button class="Table-Details" data-micromodal-trigger="modal-`+table.id+`">
-                  Detalhes
-                </button>
-              </div>
-            </div>
-          </div>`
-        }
-      })
-      document.querySelector('.Tables-Wrapper').innerHTML(tables);
-      document.querySelector('.Modal-Wrapper').innerHTML(tableModals);
-    }
 
     function ToggleBar() {
       if (window.BarOpen == true) {
@@ -292,6 +224,10 @@
     }
     function FecharMesa(id) {
       //muda o valor da flag "aberta", lança o lucro no financeiro e recarrega a pagina
+    }
+
+    function showModal(id) {
+      MicroModal.show(`modal-${id}`);
     }
   </script>
 </html>
