@@ -10,30 +10,40 @@ module.exports = {
         let result = [];
         let result2 = [];
         let result3 = [];
+        let result4 = [];
 
         const mesa = await Mesa.findAll();
         const pedido = await Pedido.findAll();
         const item = await Item.findAll();
-        const produto = await Item.findAll();
+        const produto = await Produto.findAll();
 
         result.push(JSON.stringify(mesa))
         result2.push(JSON.stringify(pedido))
         result3.push(JSON.stringify(item))
+        result4.push(JSON.stringify(produto))
 
         const objMesa = JSON.parse(result)
         const objPedido = JSON.parse(result2)
         const objItem = JSON.parse(result3)
+        const objProduto = JSON.parse(result4)
 
-        objMesa.forEach(element1 => {
-            element1.pedidos = [];
-            objPedido.forEach(element2 => {
-                if(element1.id == element2.idMesa && element2.status == 1){
-                    element1.pedidos.push(element2)
+        objMesa.forEach(mesaData => {
+            mesaData.pedidos = [];
+            objPedido.forEach(pedidoData => {
+                if(mesaData.id == pedidoData.idMesa && pedidoData.status == 1){
+                    mesaData.pedidos.push(pedidoData)
                 }
-                element2.itens = [];
-                objItem.forEach(element3 => {
-                    if(element3.idPedido == element2.id){
-                        element2.itens.push(element3)
+                pedidoData.itens = [];
+                objItem.forEach(itemData => {
+
+                    if(itemData.idPedido == pedidoData.id){
+                        objProduto.forEach(produtoData => {
+                            if(itemData.idProduto == produtoData.id){
+                                 itemData.produto = produtoData.descricao
+                            }
+                        });
+
+                        pedidoData.itens.push(itemData)
                     }
                 });
             });
