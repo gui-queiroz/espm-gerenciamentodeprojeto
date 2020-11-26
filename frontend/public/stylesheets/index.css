@@ -1,0 +1,507 @@
+* {
+  font-family: monospace;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+body .Kosima {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+}
+
+body .Kosima .Bar {
+  background: #de306f;
+  background: linear-gradient(155deg, #de306f 50%, #e73c69 100%);
+  width: 264px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  position: absolute;
+  height: 100%;
+  z-index: 2;
+}
+
+body .Kosima .Bar .Bar-Header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  margin-bottom: 35px;
+  padding-top: 32px;
+}
+
+body .Kosima .Bar .Bar-Header .Identity {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  margin-left: 32px;
+}
+
+body .Kosima .Bar .Bar-Header .Identity .Logo {
+  width: 38px;
+  height: 38px;
+  background: #ffffff;
+  margin-right: 12px;
+  border-radius: 18px 18px 7px 7px;
+}
+
+body .Kosima .Bar .Bar-Header .Identity .Title {
+  font-size: 26px;
+  color: #ffffff;
+  margin: 0;
+}
+
+body .Kosima .Bar .Bar-Header .Burger {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-right: 32px;
+  cursor: pointer;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body .Kosima .Bar .Bar-Header .Burger span {
+  height: 3px;
+  width: 25px;
+  border-radius: 20px;
+  background: #ffffff;
+  margin: 2.5px 0;
+  -webkit-transition: -webkit-transform 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: -webkit-transform 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: transform 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: transform 0.2s cubic-bezier(0.075, 0.82, 0.165, 1), -webkit-transform 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+body .Kosima .Bar .Bar-Header .Burger span:nth-child(2) {
+  -webkit-transform: translateX(50%);
+          transform: translateX(50%);
+}
+
+body .Kosima .Bar .Bar-Header .Burger:hover span {
+  -webkit-transform: translateX(15%);
+          transform: translateX(15%);
+}
+
+body .Kosima .Bar .Bar-Header .Burger:hover span:nth-child(2) {
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
+}
+
+body .Kosima .Bar .Bar-Menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 25px;
+  width: 100%;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items .Bar-Menu-Item {
+  height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  border-radius: 30px 0 0 30px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0);
+  position: relative;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items .Bar-Menu-Item .Bar-Link {
+  text-decoration: none;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items .Bar-Menu-Item .Upper-Fold {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  height: 32px;
+  width: 16px;
+  top: -32px;
+  border-bottom-right-radius: 20px;
+  -webkit-box-shadow: 0 16px 0 0 #ffffff;
+          box-shadow: 0 16px 0 0 #ffffff;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items .Bar-Menu-Item .Lower-Fold {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  height: 32px;
+  width: 16px;
+  bottom: -32px;
+  border-top-right-radius: 20px;
+  -webkit-box-shadow: 0 -16px 0 0 #ffffff;
+          box-shadow: 0 -16px 0 0 #ffffff;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items .Bar-Menu-Item:hover {
+  background-color: white;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items .Bar-Menu-Item:hover .Bar-Link {
+  color: #de306f;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items .Bar-Menu-Item:hover .Upper-Fold {
+  opacity: 1;
+}
+
+body .Kosima .Bar .Bar-Menu .Bar-Menu-Items .Bar-Menu-Item:hover .Lower-Fold {
+  opacity: 1;
+}
+
+body .Kosima .Bar.Closed {
+  width: 70px;
+}
+
+body .Kosima .Bar.Closed .Bar-Header {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body .Kosima .Bar.Closed .Bar-Header .Identity {
+  margin-left: 0;
+}
+
+body .Kosima .Bar.Closed .Bar-Header .Identity .Logo {
+  margin-right: 0;
+}
+
+body .Kosima .Bar.Closed .Bar-Header .Identity .Title {
+  display: none;
+}
+
+body .Kosima .Bar.Closed .Bar-Header .Burger {
+  padding-left: 20px;
+  margin-top: 20px;
+}
+
+body .Kosima .Bar.Closed .Bar-Menu {
+  display: none;
+}
+
+body .Kosima .Content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 12px;
+  overflow: scroll;
+  width: 100%;
+  margin-left: 70px;
+}
+
+body .Kosima .Content .Tables-Wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  width: 100%;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 240px;
+  max-width: 50%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 20px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Header img {
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: calc(100% - 40px);
+  padding: 20px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body .Table-Text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body .Table-Text .Table-Number {
+  color: #2a2a2a;
+  font-size: 56px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body .Table-Text .Table-Parcial {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body .Table-Text .Table-Parcial h2 {
+  color: #afafaf;
+  margin: 0;
+  font-size: 18px;
+  margin-bottom: -5px;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body .Table-Text .Table-Parcial span {
+  color: #444444;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body .Table-Buttons button {
+  outline: none;
+  margin: 10px;
+  border-radius: 50px;
+  border: none;
+  padding: 10px 22px;
+  color: #ffffff;
+  background: #de306f;
+  font-weight: 600;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body .Table-Buttons button:hover {
+  background: #c61354;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container .Table-Body .Table-Buttons .Table-Open {
+  display: none;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container.Inactive .Table-Header img {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container.Inactive .Table-Body .Table-Open {
+  display: block;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container.Inactive .Table-Body .Table-Details {
+  display: none;
+}
+
+body .Kosima .Content .Tables-Wrapper .Table-Container.Inactive .Table-Body .Table-Close {
+  display: none;
+}
+
+body .Kosima .Content .Order-Wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  margin: 10px 0;
+  padding-bottom: 200px;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Body .Order-Item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 10px 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 18px;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Body .Order-Item .Order-Item-Button {
+  color: #ffffff;
+  background: #de306f;
+  font-weight: 600;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Body .Order-Item .Order-Item-Button:hover {
+  background: #c61354;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Body .Order-Item .Order-Item-Amount {
+  font-weight: 600;
+  font-size: 18px;
+  width: 26px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Body .Order-Item .Order-Item-Name-Display {
+  font-size: 16px;
+  max-width: 50%;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Modal {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  left: 0;
+  bottom: 0;
+  padding: 16px 16px 16px 96px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Modal .Order-Button {
+  outline: none;
+  margin: 10px;
+  border-radius: 50px;
+  border: none;
+  padding: 10px 22px;
+  color: #ffffff;
+  background: #de306f;
+  font-weight: 600;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+body .Kosima .Content .Order-Wrapper .Order-Modal .Order-Button:hover {
+  background: #c61354;
+}
+/*# sourceMappingURL=index.css.map */

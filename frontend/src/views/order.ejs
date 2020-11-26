@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kosima</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/index.css" />
+    <link rel="stylesheet" href="/stylesheets/modal.css" />
+    <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+  </head>
+  <body>
+    <div class="Kosima">
+      <div class="Bar Closed">
+        <div class="Bar-Header">
+          <div class="Identity">
+            <div class="Logo"></div>
+            <h1 class="Title">Kosima</h1>
+          </div>
+          <div class="Burger" onclick="ToggleBar()">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <div class="Bar-Menu">
+          <ul class="Bar-Menu-Items">
+            <li class="Bar-Menu-Item">
+              <a href="/" class="Bar-Link">Home</a>
+              <span class="Upper-Fold"></span>
+              <span class="Lower-Fold"></span>
+            </li>
+            <li class="Bar-Menu-Item">
+              <a href="/pedidos" class="Bar-Link">Pedidos</a>
+              <span class="Upper-Fold"></span>
+              <span class="Lower-Fold"></span>
+            </li>
+            <li class="Bar-Menu-Item">
+              <a href="/financeiro" class="Bar-Link">Financeiro</a>
+              <span class="Upper-Fold"></span>
+              <span class="Lower-Fold"></span>
+            </li>
+            <li class="Bar-Menu-Item">
+              <a href="/estoque" class="Bar-Link">Estoque</a>
+              <span class="Upper-Fold"></span>
+              <span class="Lower-Fold"></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="Content">
+        <!---------------------------->
+        <div class="Order-Wrapper">
+          <form id="Order-Form" action="">
+            <div class="Order-Header">
+              <label for="Table">Selecionar Mesa</label>
+              <select name="Table" id="table-selector">
+                <!-- Carregar aqui as mesas -->
+                <option value="X">Mesa X</option>
+                <option value="X">Mesa X</option>
+                <option value="X">Mesa X</option>
+                <option value="X">Mesa X</option>
+                <!-- ----------------------- -->
+              </select>
+            </div>
+            <div class="Order-Body">
+            <!-- Carregar aqui os pratos -->
+              <div class="Order-Item">
+                <button type="button" class="Order-Item-Button Less" onclick="subProduct()">-</button>
+                <input name="qtX" disabled readonly type="number" value="0" class="Order-Item-Amount"/>
+                <input name="pdX" disabled hidden type="text" value="Nome do Produto" class="Order-Item-Name-Input"/>
+                <div class="Order-Item-Name">Nome do Produto</div>
+                <button type="button" class="Order-Item-Button Plus" onclick="addProduct()">+</button>
+              </div>
+            <!-- ----------------------- -->
+            </div>
+            <div class="Order-Modal">
+              <button type="submit" class="Order-Button">Finalizar Pedido</button>
+            </div>
+          </form>
+        </div>
+        <!---------------------------->
+      </div>
+    </div>
+  </body>
+  <script>
+    window.BarOpen = false;
+    function ToggleBar() {
+      if (window.BarOpen == true) {
+        document.querySelector('.Bar').classList.add('Closed');
+        window.BarOpen = false;
+      } else {
+        document.querySelector('.Bar').classList.remove('Closed');
+        window.BarOpen = true;
+      }
+    }
+
+    function subProduct(){
+      var qt = event.target.closest('.Order-Item').querySelector('input.Order-Item-Amount');
+      var pd = event.target.closest('.Order-Item').querySelector('input.Order-Item-Name-Input');
+      if(qt.value > 1){
+        qt.value = qt.value-1;
+      }
+      else if(qt.value == 1){
+        qt.value = qt.value-1;
+        qt.disabled = true;
+        pd.disabled = true;
+      }
+    }
+    function addProduct(){
+      var qt = event.target.closest('.Order-Item').querySelector('input.Order-Item-Amount');
+      var pd = event.target.closest('.Order-Item').querySelector('input.Order-Item-Name-Input');
+        qt.value++;
+        if(qt.disabled == true){
+          qt.disabled = false;
+          pd.disabled = false;
+        }
+    }
+  </script>
+</html>
