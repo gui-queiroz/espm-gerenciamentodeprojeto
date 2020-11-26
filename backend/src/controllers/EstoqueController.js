@@ -1,49 +1,66 @@
-const Estoque = require('../models/Estoque');
-const Financeiro = require('../models/Financeiro');
+const Estoque = require("../models/Estoque");
+const Financeiro = require("../models/Financeiro");
 
 module.exports = {
-    async getAll(req, res) {
-        const estoque = await Estoque.findAll();
+  async getAll(req, res) {
+    const estoque = await Estoque.findAll();
 
-        return res.json(estoque);
-    },
+    return res.json(estoque);
+  },
 
-    async create(req, res){
-        const {descricao, quantidade, valor} = req.body;
+  async create(req, res) {
+    const { descricao, quantidade, valor } = req.body;
 
-        const criado = Date.now();
-        const atualizado = Date.now();
+    const criado = Date.now();
+    const atualizado = Date.now();
 
-        const estoque = await Estoque.create({descricao, quantidade, criado, atualizado});
+    const estoque = await Estoque.create({
+      descricao,
+      quantidade,
+      criado,
+      atualizado,
+    });
 
-        await Financeiro.create({descricao: "reposição", valor, operacao: "saída", criado})
+    await Financeiro.create({
+      descricao: "reposição",
+      valor,
+      operacao: "saída",
+      criado,
+    });
 
-        return res.json(estoque);
-    },
+    return res.json(estoque);
+  },
 
-    async update(req, res){
-        const {descricao, quantidade} = req.body;
+  async update(req, res) {
+    const { descricao, quantidade } = req.body;
 
-        let idEstoque = req.params.id;
+    let idEstoque = req.params.id;
 
-        let atualizado = Date.now();
+    let atualizado = Date.now();
 
-        await Financeiro.create({descricao: "reposição", valor, operacao: "saída", criado})
+    await Financeiro.create({
+      descricao: "reposição",
+      valor,
+      operacao: "saída",
+      criado,
+    });
 
-        const estoqueAtualizar = await Estoque.update({descricao, quantidade, atualizado: atualizado}, {returning: true, where: {id: idEstoque}});
-        
-        const estoque = await Estoque.findByPk(idEstoque);
-        return res.json(estoque);
-    },
+    const estoqueAtualizar = await Estoque.update(
+      { descricao, quantidade, atualizado: atualizado },
+      { returning: true, where: { id: idEstoque } }
+    );
 
-    async deletar(req, res){
+    const estoque = await Estoque.findByPk(idEstoque);
+    return res.json(estoque);
+  },
 
-        let idEstoque = req.params.id
+  async deletar(req, res) {
+    let idEstoque = req.params.id;
 
-        const estoque = Estoque.destroy({where: {id: idEstoque}})
+    const estoque = Estoque.destroy({ where: { id: idEstoque } });
 
-        const itensEstoque = await Estoque.findAll()
+    const itensEstoque = await Estoque.findAll();
 
-        return res.json(itensEstoque);
-    }
+    return res.json(itensEstoque);
+  },
 };

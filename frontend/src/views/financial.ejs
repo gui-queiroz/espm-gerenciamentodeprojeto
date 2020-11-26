@@ -49,13 +49,118 @@
       </div>
       <div class="Content">
         <!---------------------------->
-
+        <div class="Datatable-Wrapper">
+          <div class="Datatable-Header">
+            <h1>Financeiro</h1>
+          </div>
+          <div class="Datatable-Content">
+            <div class="Datatable-Area">
+              <table id="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Operação</th>
+                    <th>Adicionado em</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="table_body"></tbody>
+              </table>
+            </div>
+            <div class="Form-Area">
+              <form id="add_item_form" onsubmit="enviaForm()">
+                <h2>Adicionar item</h2>
+                <label for="">Descrição</label>
+                <input type="text" name="description" />
+                <label for="">Valor</label>
+                <input type="number" name="valor" />
+                <label for="">Operação</label>
+                <select name="operacao" id="">
+                  <option value="saida">Saída</option>
+                  <option value="entrada">Entrada</option>
+                </select>
+                <button type="submit">Adicionar</button>
+              </form>
+            </div>
+          </div>
+        </div>
         <!---------------------------->
       </div>
+    </div>
+    <div class="Modal-Wrapper">
+      <!-- Renderizar um modal para cada mesa aberta -->
+
+      <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+          <div
+            class="modal__container"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-1-title"
+          >
+            <header class="modal__header">
+              <h2 class="modal__title" id="modal-1-title">Mesa X</h2>
+              <button
+                class="modal__close"
+                aria-label="Close modal"
+                data-micromodal-close
+              ></button>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+              <table class="order-wrapper">
+                <tr class="order-item" id="legenda">
+                  <th class="order-name">Nome do Item</th>
+                  <th class="order-qt">Qtd</th>
+                  <th class="order-price">Valor Un.</th>
+                </tr>
+                <!-----------Renderizar para cada item-------------->
+                <tr class="order-item">
+                  <td class="order-name">Prato X</td>
+                  <td class="order-qt">x</td>
+                  <td class="order-price">R$XX,XX</td>
+                </tr>
+                <tr class="order-item">
+                  <td class="order-name">Prato X</td>
+                  <td class="order-qt">x</td>
+                  <td class="order-price">R$XX,XX</td>
+                </tr>
+                <tr class="order-item">
+                  <td class="order-name">Prato X</td>
+                  <td class="order-qt">x</td>
+                  <td class="order-price">R$XX,XX</td>
+                </tr>
+                <tr class="order-item">
+                  <td class="order-name">Prato X</td>
+                  <td class="order-qt">x</td>
+                  <td class="order-price">R$XX,XX</td>
+                </tr>
+                <!------------------------->
+                <tr class="order-item" id="sumario">
+                  <th class="order-name">Total</th>
+                  <th class="order-price">R$XX,XX</th>
+                </tr>
+              </table>
+            </main>
+            <footer class="modal__footer">
+              <button class="modal__btn modal__btn-primary">
+                Fechar Conta
+              </button>
+              <button class="modal__btn" data-micromodal-close>Voltar</button>
+            </footer>
+          </div>
+        </div>
+      </div>
+
+      <!-- Renderizar um modal para cada mesa aberta -->
     </div>
   </body>
   <script>
     window.BarOpen = false;
+    MicroModal.init({
+      disableFocus: true,
+    });
     function ToggleBar() {
       if (window.BarOpen == true) {
         document.querySelector('.Bar').classList.add('Closed');
@@ -63,6 +168,118 @@
       } else {
         document.querySelector('.Bar').classList.remove('Closed');
         window.BarOpen = true;
+      }
+    }
+
+    fetch('http://localhost:5000/financeiro')
+      .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+
+        return response.json();
+      })
+      .then(data => {
+        const table_body = document.getElementById('table_body');
+
+        console.log(data);
+
+        data.map(item => {
+          const row = document.createElement('tr');
+
+          const date = new Date(item.criado);
+          const formated_date = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+
+          row.innerHTML = `
+            <tr>
+              <td>${item.id}</td>
+              <td>${item.descricao}</td>
+              <td>${item.valor}</td>
+              <td>${item.operacao}</td>
+              <td>${formated_date}</td>
+              <td style="text-align: right">
+                <button class="Delete-Item-Button" onclick="excluirItem(${item.id})">Excluir</button>
+              </td>
+            </tr>
+          `;
+
+          table_body.append(row);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        error.then(data => console.log(data));
+      });
+
+    function enviaForm() {
+      event.preventDefault();
+
+      try {
+        const descricao = document.getElementsByName('description')[0].value;
+        const valor = document.getElementsByName('valor')[0].value;
+        const operacao = document.getElementsByName('operacao')[0].value;
+
+        if (!descricao || descricao == '' || descricao.length <= 0) {
+          throw new Error('Por favor complete a descrição.');
+        }
+
+        if (!valor || valor == '' || valor.length <= 0) {
+          throw new Error('Por favor complete o valor.');
+        }
+        const data = { descricao, valor, operacao };
+
+        console.log(data);
+
+        fetch('http://localhost:5000/financeiro', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw response;
+            }
+
+            return response;
+          })
+          .then(data => {
+            window.location.reload();
+          })
+          .catch(error => {
+            console.log(error);
+            error.then(data => console.log(data));
+          });
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    function excluirItem(id) {
+      try {
+        fetch(`http://localhost:5000/financeiro/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw response;
+            }
+
+            return response;
+          })
+          .then(data => {
+            window.location.reload();
+          })
+          .catch(error => {
+            console.log(error);
+            error.then(data => console.log(data));
+          });
+      } catch (error) {
+        alert(error.message);
       }
     }
   </script>
