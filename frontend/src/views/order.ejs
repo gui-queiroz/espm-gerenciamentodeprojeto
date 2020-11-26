@@ -50,7 +50,7 @@
       <div class="Content">
         <!---------------------------->
         <div class="Order-Wrapper">
-          <form id="Order-Form" action="">
+          <form id="Order-Form" onsubmit="enviaForm()">
             <div class="Order-Header">
               <label for="Table">Selecionar Mesa</label>
               <select name="Table" id="table-selector">
@@ -66,11 +66,11 @@
             <!-- Carregar aqui os pratos -->
               <div class="Order-Item">
                 <button type="button" class="Order-Item-Button Less" onclick="subProduct()">-</button>
-                <input name="qtX" disabled readonly type="number" value="0" class="Order-Item-Amount"/>
-                <input name="pdX" disabled hidden type="text" value="Nome do Produto" class="Order-Item-Name-Input"/>
-                <div class="Order-Item-Name">Nome do Produto</div>
+                <input data-id="1" disabled readonly type="number" value="0" class="Order-Item-Amount"/>
+                <div class="Order-Item-Name-Display">Nome do Produto</div>
                 <button type="button" class="Order-Item-Button Plus" onclick="addProduct()">+</button>
               </div>
+              
             <!-- ----------------------- -->
             </div>
             <div class="Order-Modal">
@@ -96,24 +96,55 @@
 
     function subProduct(){
       var qt = event.target.closest('.Order-Item').querySelector('input.Order-Item-Amount');
-      var pd = event.target.closest('.Order-Item').querySelector('input.Order-Item-Name-Input');
       if(qt.value > 1){
         qt.value = qt.value-1;
       }
       else if(qt.value == 1){
         qt.value = qt.value-1;
         qt.disabled = true;
-        pd.disabled = true;
       }
     }
     function addProduct(){
       var qt = event.target.closest('.Order-Item').querySelector('input.Order-Item-Amount');
-      var pd = event.target.closest('.Order-Item').querySelector('input.Order-Item-Name-Input');
         qt.value++;
         if(qt.disabled == true){
           qt.disabled = false;
-          pd.disabled = false;
         }
+    }
+
+    var dados = {};
+    function enviaForm(){
+      event.preventDefault();
+      dados.idMesa = document.querySelector('#table-selector').value;
+      dados.itens = []
+      fields = document.querySelectorAll('.Order-Item input:not([disabled])');
+      fields.forEach(function(element, index) {
+        dados.itens[index] = {};
+        dados.itens[index].idProduto = element.dataset.id;
+        dados.itens[index].quantidade = element.value;
+      })
+
+      fetch('/item', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dados),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+        return response;
+      })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+        error.then(data => console.log(data));
+      });
+      window.reload();
     }
   </script>
 </html>
