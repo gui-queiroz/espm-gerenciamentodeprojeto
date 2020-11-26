@@ -8,6 +8,29 @@ module.exports = {
         return res.json(pedidos);
     },
 
+    async getById(id) {
+        let result = [];
+        let result2 = [];
+        
+        const pedidos = await Pedido.findByPk(id);
+
+        result.push(JSON.stringify(pedidos))
+
+        const objPedido = JSON.parse(result)
+
+        const item = await Item.findAll({where: {idPedido: id}});
+
+        result2.push(JSON.stringify(item))
+        const objItem = JSON.parse(result2)
+
+        objPedido.itens = [];
+
+        objPedido.itens = objItem
+
+        
+        return objPedido;
+    },
+
     async create(req, res){
         const {idMesa, valorFinal, data} = req.body;
 

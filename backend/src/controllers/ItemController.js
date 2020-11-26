@@ -2,6 +2,7 @@ const Item = require('../models/Item');
 const Produto = require('../models/Produto');
 const Pedido = require('../models/Pedido');
 const Mesa = require('../models/Mesa');
+const PedidoController = require('./PedidoController');
 
 module.exports = {
     async getAll(req, res) {
@@ -15,6 +16,8 @@ module.exports = {
 
         let result = [];
         let result2 = [];
+
+        let valorTotal = 0;
 
         let idPedido;
 
@@ -37,6 +40,9 @@ module.exports = {
             produtos.forEach(element2 => {
                 if(element.idProduto == element2.id){
                     element.valor = element2.valorUnitario * element.quantidade
+                    
+                    valorTotal += element.valor;
+
                 }
             });
         });
@@ -45,7 +51,11 @@ module.exports = {
             const item = await Item.create({idPedido, idProduto: element.idProduto, quantidade: element.quantidade, valor: element.valor});
         });
 
-        return res.json(result);
+        Pedido.increment({valorFinal: +valorTotal}, {where: { id: idPedido }})
+
+        const teste12313 = await PedidoController.getById(idPedido)
+
+        return res.json(teste12313);
     },
 
     async update(req, res){
