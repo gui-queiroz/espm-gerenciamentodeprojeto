@@ -7,6 +7,7 @@ const Item = require('../models/Item');
 const Mesa = require('../models/Mesa');
 const Pedido = require('../models/Pedido');
 const Produto = require('../models/Produto');
+const Financeiro = require('../models/Financeiro');
 
 const connection = new Sequelize(dbConfig);
 
@@ -16,5 +17,6 @@ Item.init(connection);
 Mesa.init(connection);
 Pedido.init(connection);
 Produto.init(connection);
+Financeiro.init(connection);
 
 module.exports = connection;

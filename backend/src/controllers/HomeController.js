@@ -3,6 +3,7 @@ const Pedido = require('../models/Pedido');
 const Mesa = require('../models/Mesa');
 const Item = require('../models/Item');
 const Produto = require('../models/Produto');
+const Financeiro = require('../models/Financeiro');
 
 module.exports = {
     async get(req, res) {
@@ -75,7 +76,13 @@ module.exports = {
         { where: { idMesa: req.params.id } }
         )
 
-        console.log(close)
+        console.log(closePedido)
+
+        const criado = Date.now()
+
+        const pedido = await Pedido.findByPk(1)
+
+        await Financeiro.create({descricao: "pagamento", valor: pedido.valorFinal, operacao: "entrada", criado})
 
         const mesa = await Mesa.findByPk(req.params.id)
 

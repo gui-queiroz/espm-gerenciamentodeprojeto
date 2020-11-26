@@ -5,6 +5,7 @@ const Mesa = require('./controllers/MesaController');
 const Pedido = require('./controllers/PedidoController');
 const Produto = require('./controllers/ProdutoController');
 const Home = require('./controllers/HomeController');
+const Financeiro = require('./controllers/FinanceiroController');
 
 const routes = express.Router();
 
@@ -12,6 +13,11 @@ routes.post('/estoque', Estoque.create);
 routes.get('/estoque', Estoque.getAll);
 routes.put('/estoque/:id', Estoque.update);
 routes.delete('/estoque/:id', Estoque.deletar);
+
+routes.post('/financeiro', Financeiro.create);
+routes.get('/financeiro', Financeiro.getAll);
+routes.put('/financeiro/:id', Financeiro.update);
+routes.delete('/financeiro/:id', Financeiro.deletar);
 
 routes.post('/item', Item.create);
 routes.get('/item', Item.getAll);
