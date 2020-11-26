@@ -1,4 +1,5 @@
 const Pedido = require('../models/Pedido');
+const Item = require('../models/Item');
 
 module.exports = {
     async getAll(req, res) {

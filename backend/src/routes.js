@@ -4,6 +4,7 @@ const Item = require('./controllers/ItemController');
 const Mesa = require('./controllers/MesaController');
 const Pedido = require('./controllers/PedidoController');
 const Produto = require('./controllers/ProdutoController');
+const Home = require('./controllers/HomeController');
 
 const routes = express.Router();
 
@@ -26,6 +27,9 @@ routes.put('/pedido', Pedido.update);
 
 routes.post('/produto', Produto.create);
 routes.get('/produto', Produto.getAll);
-routes.put('/produto', Produto.update);
+
+routes.get('/home', Home.get);
+routes.post('/home/openTable/:id', Home.openTable);
+routes.post('/home/closeTable/:id', Home.closeTable);
 
 module.exports = routes;

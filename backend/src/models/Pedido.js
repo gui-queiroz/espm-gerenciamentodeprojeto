@@ -6,7 +6,8 @@ class Pedido extends Model {
         super.init({
             idMesa: DataTypes.INTEGER,
             valorFinal: DataTypes.FLOAT,
-            data: DataTypes.DATE    
+            data: DataTypes.DATE,
+            status: DataTypes.INTEGER
         },{
             sequelize
         })
